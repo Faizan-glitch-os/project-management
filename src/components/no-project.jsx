@@ -4,7 +4,7 @@ import Button from "./button";
 
 export default function NoProject() {
   return (
-    <>
+    <div className="w-3/5 min-h-screen flex flex-col items-center justify-center gap-4">
       <img
         src={EmptyProjectImg}
         alt="Image for empty project"
@@ -15,6 +15,6 @@ export default function NoProject() {
         Select a project or get started with a new one
       </p>
       <Button children="Create new project" />
-    </>
+    </div>
   );
 }
