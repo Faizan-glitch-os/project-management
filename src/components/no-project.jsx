@@ -2,7 +2,7 @@ import EmptyProjectImg from "../assets/no-projects.png";
 
 import Button from "./button";
 
-export default function NoProject() {
+export default function NoProject({ handleOnClick }) {
   return (
     <div className="w-3/5 min-h-screen flex flex-col items-center justify-center gap-4">
       <img
@@ -14,7 +14,7 @@ export default function NoProject() {
       <p className="text-2xl text-slate-900">
         Select a project or get started with a new one
       </p>
-      <Button children="Create new project" />
+      <Button handleOnClick={handleOnClick} children="Create new project" />
     </div>
   );
 }
