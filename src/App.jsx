@@ -41,7 +41,7 @@ function App() {
           <h2 className="text-4xl text-white font-bold">Your Projects</h2>
           <Button
             children={showNewProject ? "Cancel" : "+Add Project"}
-            bgColor={true}
+            btnStyle="noBg"
             handleOnClick={handleShowProject}
           />
           <ol>
@@ -59,9 +59,7 @@ function App() {
             <h2 className="text-3xl font-bold text-neutral-600">
               {addProjects[0].title}
             </h2>
-            <button className="text-xl   text-neutral-600 hover:text-neutral-800 rounded-xl">
-              Delete
-            </button>
+            <Button children="Delete" btnStyle="simple" />
           </div>
           <p className="text-base text-neutral-600">{addProjects[0].date}</p>
           <p className="text-lg font-semibold text-neutral-600">
@@ -77,16 +75,12 @@ function App() {
               placeholder="add task"
               className={`h-16 resize-none overflow-hidden bg-neutral-200 rounded-md w-2/5 text-2xl text-neutral-800 px-2  border-b-neutral-400 border-b-4 focus:border-b-neutral-600 border-transparent focus:outline-none`}
             />
-            <button className="text-xl text-neutral-600 hover:text-neutral-800 rounded-xl">
-              Add Task
-            </button>
+            <Button children="Add Task" btnStyle="simple" />
           </p>
           <ol className="flex flex-col bg-neutral-200 rounded-sm px-4 py-8 mt-4 gap-6">
             <p className="flex justify-between  ">
               <li className="text-xl text-neutral-800">1st item</li>
-              <button className="text-xl text-neutral-600 hover:text-neutral-800 rounded-xl">
-                Clear
-              </button>
+              <Button children="Clear" btnStyle="simple" />
             </p>
           </ol>
         </div>
