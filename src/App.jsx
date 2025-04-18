@@ -9,7 +9,13 @@ import UserInput from "./components/user-input";
 function App() {
   const [showNewProject, setShowNewProject] = useState(false);
 
-  const [addProjects, setAddProject] = useState([]);
+  const [addProjects, setAddProject] = useState([
+    {
+      title: "Project 1",
+      description: "Project 1 description",
+      date: "2023-10-01",
+    },
+  ]);
 
   function handleShowProject() {
     setShowNewProject(!showNewProject);
@@ -47,19 +53,33 @@ function App() {
               </li>
             ))}
           </ol>
+        </div>{" "}
+        <div className="flex flex-col gap-3 w-3/5 min-h-screen px-8">
+          <div className="flex justify-between">
+            <h2 className="text-3xl font-bold text-neutral-600">
+              {addProjects[0].title}
+            </h2>
+            <button className="text-2xl   text-neutral-600 hover:text-neutral-800 rounded-xl">
+              Delete
+            </button>
+          </div>
+          <p className="text-base text-neutral-600">{addProjects[0].date}</p>
+          <p className="text-lg font-semibold text-neutral-600">
+            {addProjects[0].description}
+          </p>
         </div>
-
-        {/* {showNewProject ? (
-          <NewProject
-            handleOnCancel={handleShowProject}
-            handleOnSave={handleAddNewProject}
-          />
-        ) : (
-          <NoProject handleOnClick={handleShowProject} />
-        )} */}
       </section>
     </>
   );
 }
 
 export default App;
+
+/* {showNewProject ? (
+    <NewProject
+      handleOnCancel={handleShowProject}
+      handleOnSave={handleAddNewProject}
+    />
+  ) : (
+    <NoProject handleOnClick={handleShowProject} />
+  )} */
