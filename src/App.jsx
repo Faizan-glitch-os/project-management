@@ -77,14 +77,14 @@ function App() {
               placeholder="add task"
               className={`h-16 resize-none overflow-hidden bg-neutral-200 rounded-md w-2/5 text-2xl text-neutral-800 px-2  border-b-neutral-400 border-b-4 focus:border-b-neutral-600 border-transparent focus:outline-none`}
             />
-            <button className="text-xl   text-neutral-600 hover:text-neutral-800 rounded-xl">
+            <button className="text-xl text-neutral-600 hover:text-neutral-800 rounded-xl">
               Add Task
             </button>
           </p>
-          <ol className="flex flex-col  bg-neutral-200 rounded-sm px-4 py-8 mt-4 gap-6">
+          <ol className="flex flex-col bg-neutral-200 rounded-sm px-4 py-8 mt-4 gap-6">
             <p className="flex justify-between  ">
               <li className="text-xl text-neutral-800">1st item</li>
-              <button className="text-xl   text-neutral-600 hover:text-neutral-800 rounded-xl">
+              <button className="text-xl text-neutral-600 hover:text-neutral-800 rounded-xl">
                 Clear
               </button>
             </p>
