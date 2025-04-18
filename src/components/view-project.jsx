@@ -1,6 +1,8 @@
 import Button from "./button";
 
 export default function ViewProject({ project }) {
+  console.log(project);
+
   return (
     <div className="flex flex-col gap-3 w-3/5 min-h-screen px-8">
       <div className="flex justify-between">

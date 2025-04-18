@@ -8,7 +8,9 @@ import NoProject from "./components/no-project";
 import UserInput from "./components/user-input";
 import ViewProject from "./components/view-project";
 function App() {
-  const [showNewProject, setShowNewProject] = useState(false);
+  const [newProject, setNewProject] = useState(false);
+  const [showProject, setShowProject] = useState(false);
+  const [index, setIndex] = useState();
 
   const [addProjects, setAddProject] = useState([
     {
@@ -18,18 +20,19 @@ function App() {
     },
   ]);
 
-  function handleShowProject() {
-    setShowNewProject(!showNewProject);
+  function handleNewProject() {
+    setNewProject(!newProject);
+    setShowProject(false);
   }
 
-  function handleOnProjectClick() {}
+  function handleOnProjectClick(index) {
+    setShowProject(true);
+    setIndex(index);
+  }
 
   function handleAddNewProject(newProject) {
-    console.log(newProject);
     setAddProject((oldProjects) => [...oldProjects, newProject]);
-    handleShowProject();
-    console.log(addProjects);
-    console.log(addProjects.length);
+    handleNewProject();
   }
 
   return (
@@ -41,33 +44,37 @@ function App() {
         <div className="w-2/5 min-h-screen bg-slate-900 pl-12 pt-16 rounded-tr-3xl flex flex-col items-start gap-8">
           <h2 className="text-4xl text-white font-bold">Your Projects</h2>
           <Button
-            children={showNewProject ? "Cancel" : "+Add Project"}
+            children={newProject ? "Cancel" : "+Add Project"}
             btnStyle="noBg"
-            handleOnClick={handleShowProject}
+            handleOnClick={handleNewProject}
           />
           <ol>
-            {addProjects.map((project) => (
-              <li>
-                <button className="text-2xl text-neutral-600 hover:text-neutral-400">
-                  {project.title}
-                </button>
-              </li>
-            ))}
+            {addProjects.length > 0 ? (
+              addProjects.map((project, index) => (
+                <li key={index}>
+                  <button
+                    onClick={() => handleOnProjectClick(index)}
+                    className="text-2xl text-neutral-300 hover:text-neutral-400"
+                  >
+                    {project.title}
+                  </button>
+                </li>
+              ))
+            ) : (
+              <p className="text-xl text-white">No Projects</p>
+            )}
           </ol>
         </div>
-        <ViewProject project={addProjects[0]} />
+        {showProject && <ViewProject project={addProjects[index]} />}
+        {newProject && (
+          <NewProject
+            handleOnCancel={handleNewProject}
+            handleOnSave={handleAddNewProject}
+          />
+        )}
       </section>
     </>
   );
 }
 
 export default App;
-
-/* {showNewProject ? (
-    <NewProject
-      handleOnCancel={handleShowProject}
-      handleOnSave={handleAddNewProject}
-    />
-  ) : (
-    <NoProject handleOnClick={handleShowProject} />
-  )} */
