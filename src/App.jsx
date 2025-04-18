@@ -1,17 +1,28 @@
 import Button from "./components/button";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import NewProject from "./components/new-project";
 
 import NoProject from "./components/no-project";
 
 import UserInput from "./components/user-input";
-
 function App() {
   const [showNewProject, setShowNewProject] = useState(false);
 
-  function handleNewProject() {
+  const [addProjects, setAddProject] = useState([]);
+
+  function handleShowProject() {
     setShowNewProject(!showNewProject);
+  }
+
+  function handleOnProjectClick() {}
+
+  function handleAddNewProject(newProject) {
+    console.log(newProject);
+    setAddProject((oldProjects) => [...oldProjects, newProject]);
+    handleShowProject();
+    console.log(addProjects);
+    console.log(addProjects.length);
   }
 
   return (
@@ -25,15 +36,27 @@ function App() {
           <Button
             children={showNewProject ? "Cancel" : "+Add Project"}
             bgColor={true}
-            handleOnClick={handleNewProject}
+            handleOnClick={handleShowProject}
           />
-          <p></p>
+          <ol>
+            {addProjects.map((project) => (
+              <li>
+                <button className="text-2xl text-neutral-600 hover:text-neutral-400">
+                  {project.title}
+                </button>
+              </li>
+            ))}
+          </ol>
         </div>
-        {showNewProject ? (
-          <NewProject handleOnClick={handleNewProject} />
+
+        {/* {showNewProject ? (
+          <NewProject
+            handleOnCancel={handleShowProject}
+            handleOnSave={handleAddNewProject}
+          />
         ) : (
-          <NoProject handleOnClick={handleNewProject} />
-        )}
+          <NoProject handleOnClick={handleShowProject} />
+        )} */}
       </section>
     </>
   );

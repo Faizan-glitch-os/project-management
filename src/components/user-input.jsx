@@ -1,10 +1,9 @@
-export default function UserInput({
-  label,
-  inputTag,
-  helperText,
-  inputHeight,
-  inputPaddingY,
-}) {
+import { forwardRef } from "react";
+
+const userInput = forwardRef(function UserInput(
+  { label, inputTag, helperText, inputHeight, inputPaddingY },
+  ref
+) {
   return (
     <p className="flex flex-col item-start gap-1">
       <label
@@ -15,6 +14,7 @@ export default function UserInput({
       </label>
       {inputTag === "textarea" ? (
         <textarea
+          ref={ref}
           id="title"
           required
           rows="1"
@@ -23,6 +23,7 @@ export default function UserInput({
         />
       ) : (
         <input
+          ref={ref}
           type="date"
           id="title"
           required
@@ -32,4 +33,6 @@ export default function UserInput({
       )}
     </p>
   );
-}
+});
+
+export default userInput;
