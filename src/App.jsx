@@ -7,11 +7,14 @@ import NoProject from "./components/no-project";
 
 import UserInput from "./components/user-input";
 import ViewProject from "./components/view-project";
+import Model from "./components/model";
 function App() {
   const [show, setShow] = useState("");
   const [index, setIndex] = useState();
 
   const [addProjects, setAddProject] = useState([]);
+
+  const modal = useRef();
 
   let content;
 
@@ -54,6 +57,10 @@ function App() {
   }
 
   function handleAddTask(index, task) {
+    if (task === "") {
+      modal.current.open(); // Open the modal if the task is empty
+      return;
+    }
     setAddProject((prevProjects) => {
       const updatedProjects = [...prevProjects]; // Create a shallow copy of the projects array
       const updatedProject = { ...updatedProjects[index] }; // Create a shallow copy of the specific project
@@ -84,6 +91,7 @@ function App() {
 
   return (
     <>
+      <Model ref={modal} />
       <h1 className="my-8 text-center text-5xl font-bold">
         Project Management
       </h1>
@@ -92,7 +100,7 @@ function App() {
           <h2 className="text-4xl text-white font-bold">Your Projects</h2>
           <Button
             children={show === "new" ? "Cancel" : "+Add Project"}
-            btnStyle="noBg"
+            btnStyle="Bg"
             handleOnClick={
               show === "new" ? handleCancel : handleOnNewProjectClick
             }
