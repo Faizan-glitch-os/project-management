@@ -27,6 +27,7 @@ export default function NewProject({ handleOnCancel, handleOnSave }) {
               title: `${title.current.value}`,
               description: `${description.current.value}`,
               date: `${date.current.value}`,
+              tasks: [],
             })
           }
           children="Save"

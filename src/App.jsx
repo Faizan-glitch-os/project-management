@@ -8,31 +8,76 @@ import NoProject from "./components/no-project";
 import UserInput from "./components/user-input";
 import ViewProject from "./components/view-project";
 function App() {
-  const [newProject, setNewProject] = useState(false);
-  const [showProject, setShowProject] = useState(false);
+  const [show, setShow] = useState("");
   const [index, setIndex] = useState();
 
-  const [addProjects, setAddProject] = useState([
-    {
-      title: "Project 1",
-      description: "Project 1 description",
-      date: "2023-10-01",
-    },
-  ]);
+  const [addProjects, setAddProject] = useState([]);
 
-  function handleNewProject() {
-    setNewProject(!newProject);
-    setShowProject(false);
+  let content;
+
+  if (show === "new") {
+    content = (
+      <NewProject
+        handleOnCancel={handleCancel}
+        handleOnSave={handleAddNewProject}
+      />
+    );
+  } else if (show === "selected") {
+    <ViewProject
+      project={addProjects[index]}
+      ProjectIndex={index}
+      onTaskClick={handleAddTask}
+      onClearClick={handleClearTask}
+      onDeleteClick={handleDeleteProject}
+    />;
+  } else if ("nothing") {
+    content = <NoProject handleOnClick={handleOnNewProjectClick} />;
+  }
+
+  function handleOnNewProjectClick() {
+    setShow("new");
+  }
+  function handleCancel() {
+    setShow("nothing");
   }
 
   function handleOnProjectClick(index) {
-    setShowProject(true);
+    setShow("selected");
     setIndex(index);
   }
 
   function handleAddNewProject(newProject) {
     setAddProject((oldProjects) => [...oldProjects, newProject]);
     handleNewProject();
+  }
+
+  function handleAddTask(index, task) {
+    setAddProject((prevProjects) => {
+      const updatedProjects = [...prevProjects]; // Create a shallow copy of the projects array
+      const updatedProject = { ...updatedProjects[index] }; // Create a shallow copy of the specific project
+      updatedProject.tasks = [...(updatedProject.tasks || []), task]; // Add the new task immutably
+      updatedProjects[index] = updatedProject; // Replace the updated project in the array
+      return updatedProjects; // Return the new array
+    });
+  }
+
+  function handleClearTask(index, taskIndex) {
+    setAddProject((prevProjects) => {
+      const updatedProjects = [...prevProjects]; // Create a shallow copy of the projects array
+      const updatedProject = { ...updatedProjects[index] }; // Create a shallow copy of the specific project
+      updatedProject.tasks = updatedProject.tasks.filter(
+        (_, i) => i !== taskIndex
+      ); // Remove the task at the specified index immutably
+      updatedProjects[index] = updatedProject; // Replace the updated project in the array
+      return updatedProjects; // Return the new array
+    });
+  }
+
+  function handleDeleteProject(index) {
+    setAddProject((prevProjects) => {
+      return prevProjects.filter((_, i) => i !== index); // Remove the project at the specified index
+    });
+    setShowProject(false); // Hide the project view if the deleted project was being viewed
   }
 
   return (
@@ -44,9 +89,11 @@ function App() {
         <div className="w-2/5 min-h-screen bg-slate-900 pl-12 pt-16 rounded-tr-3xl flex flex-col items-start gap-8">
           <h2 className="text-4xl text-white font-bold">Your Projects</h2>
           <Button
-            children={newProject ? "Cancel" : "+Add Project"}
+            children={show === "new" ? "Cancel" : "+Add Project"}
             btnStyle="noBg"
-            handleOnClick={handleNewProject}
+            handleOnClick={
+              show === "new" ? handleCancel : handleOnNewProjectClick
+            }
           />
           <ol>
             {addProjects.length > 0 ? (
@@ -65,13 +112,7 @@ function App() {
             )}
           </ol>
         </div>
-        {showProject && <ViewProject project={addProjects[index]} />}
-        {newProject && (
-          <NewProject
-            handleOnCancel={handleNewProject}
-            handleOnSave={handleAddNewProject}
-          />
-        )}
+        {content}
       </section>
     </>
   );
