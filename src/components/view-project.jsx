@@ -46,7 +46,7 @@ export default function ViewProject({
       <ol className="flex flex-col bg-neutral-200 rounded-sm px-4 py-8 mt-4 gap-6">
         {project.tasks.map((item, index) => {
           return (
-            <p key={index} className="flex justify-between  ">
+            <p key={index} className="flex justify-between">
               <li className="text-xl text-neutral-800">{item}</li>
               <Button
                 handleOnClick={() => onClearClick(ProjectIndex, index)}

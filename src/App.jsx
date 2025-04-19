@@ -23,13 +23,15 @@ function App() {
       />
     );
   } else if (show === "selected") {
-    <ViewProject
-      project={addProjects[index]}
-      ProjectIndex={index}
-      onTaskClick={handleAddTask}
-      onClearClick={handleClearTask}
-      onDeleteClick={handleDeleteProject}
-    />;
+    content = (
+      <ViewProject
+        project={addProjects[index]}
+        ProjectIndex={index}
+        onTaskClick={handleAddTask}
+        onClearClick={handleClearTask}
+        onDeleteClick={handleDeleteProject}
+      />
+    );
   } else if ("nothing") {
     content = <NoProject handleOnClick={handleOnNewProjectClick} />;
   }
@@ -42,13 +44,13 @@ function App() {
   }
 
   function handleOnProjectClick(index) {
-    setShow("selected");
     setIndex(index);
+    setShow("selected");
   }
 
   function handleAddNewProject(newProject) {
     setAddProject((oldProjects) => [...oldProjects, newProject]);
-    handleNewProject();
+    handleCancel();
   }
 
   function handleAddTask(index, task) {
@@ -77,7 +79,7 @@ function App() {
     setAddProject((prevProjects) => {
       return prevProjects.filter((_, i) => i !== index); // Remove the project at the specified index
     });
-    setShowProject(false); // Hide the project view if the deleted project was being viewed
+    setShow("nothing"); // Hide the project view if the deleted project was being viewed
   }
 
   return (
@@ -95,13 +97,13 @@ function App() {
               show === "new" ? handleCancel : handleOnNewProjectClick
             }
           />
-          <ol>
+          <ol className="w-full">
             {addProjects.length > 0 ? (
               addProjects.map((project, index) => (
                 <li key={index}>
                   <button
                     onClick={() => handleOnProjectClick(index)}
-                    className="text-2xl text-neutral-300 hover:text-neutral-400"
+                    className="w-full px-4 py-2 text-2xl text-start text-neutral-300 hover:rounded-l-md hover:text-neutral-400 hover:bg-neutral-700"
                   >
                     {project.title}
                   </button>
